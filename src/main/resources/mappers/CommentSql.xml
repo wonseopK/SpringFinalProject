@@ -1,0 +1,96 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.comment.CommentMapper">
+	<!-- 댓글 저장 -->
+	<insert id="insertComment" parameterType="CMDTO">
+		insert into comment (pnum, writer, content, writetime, grp, grph, grps, fix) 
+		values (#{pnum}, #{writer}, #{content}, now(), #{grp}, #{grph}, #{grps}, #{fix})
+	</insert>
+	
+	<!-- 댓글 Num의 최댓값 가져오기 -->
+	<select id="getMaxNum" resultType="int">
+		select ifnull(max(num),0) from comment
+	</select>
+	
+	<!-- 댓글 내역 가져오기 -->
+	<select id="getCommentList" parameterType="int" resultType="CMDTO">
+		select c.num, c.pnum, c.writer, c.content, c.writetime, c.parent, c.parent_num, c.fix, c.grp, c.grph, c.grps, c.tempdel ,u.photo from comment c left outer join user u
+	    on c.writer = u.id where pnum = #{pnum} 
+	    <choose>
+	    	<!-- 댓글 등록순 -->
+	    	<when test="order == 1">
+			    order by fix desc, grp asc, grph asc;  
+	    	</when>
+	    	<!-- 댓글 최신순 -->
+	    	<when test="order == 2">
+			    order by fix desc, grp desc, grph asc;  
+	    	</when>
+	    </choose>
+	</select>
+	
+	<!-- 해당 그룹에서 제일 큰grph가져오기  -->
+	<select id="changeHierarchy" parameterType="int" resultType="int">
+		select max(grph) from comment where grp = #{grp} 
+	</select>
+	
+	<!-- 댓글수정 -->
+	<update id="updateComment" parameterType="String">
+		update comment set content = #{content} where num = #{num}
+	</update>
+	<!-- 부모글 등록 -->
+	<update id="updateParent" parameterType="String">
+		update comment set parent = #{parent} where num = #{num}
+	</update>
+	<!-- 부모글의 num 등록 -->
+	<update id="updateParentNum" parameterType="int">
+		update comment set parent_num = #{parent_num} where num = #{num}
+	</update>
+	<!-- 부모글 내용 가져오기 -->
+	<select id="getParentContent" parameterType="int" resultType="String">
+		select content from comment where num = #{num}
+	</select>
+	
+	<!-- 댓글삭제 -->
+	<!-- 해당num의 글만삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		delete from comment where num = #{num}
+	</delete>
+	<!-- 임시삭제 -->
+	<update id="deleteTemp" parameterType="int">
+		update comment set tempdel = 1 where num = #{num}
+	</update>
+	<!-- 해당그룹의 갯수 확인 -->
+	<select id="countGrp" parameterType="int" resultType="int">
+		select count(*) from comment where grp = #{grp}	
+	</select>
+	<!-- 임시삭제글 있는지 확인 -->
+	<select id="countTempdel" parameterType="int" resultType="int">
+		select count(*) from comment where  grp = #{grp} and tempdel = 1
+	</select>
+	<!-- 해당 그릅삭제 -->
+	<delete id="deleteBranchComment" parameterType="int">
+		delete from comment where grp = #{grp}
+	</delete>
+	
+	<!-- 댓글고정기능 -->
+	<!-- fix값 초기화 -->
+	<update id="resetFix">
+		update comment set fix = 0;
+	</update>
+	<!-- fix값 1로변경 -->
+	<update id="fixComment" parameterType="int">
+		update comment set fix = 1 where grp = #{grp}
+	</update>
+	<!-- fix값 0으로 변경 -->
+	<update id="cancelFix" parameterType="int">
+		update comment set fix = 0 where grp = #{grp}
+	</update>
+	<!-- 고정여부 확인 -->
+	<select id="checkFix" parameterType="int" resultType="int">
+		select max(fix) from comment where grp = #{grp}
+	</select>
+	
+	<!-- 댓글 갯수 가져오기 -->
+	<select id="countComment" parameterType="int" resultType="int">
+		select count(num) from comment where pnum = #{pnum} and tempdel != 1
+	</select>
+</mapper>
