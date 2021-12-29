@@ -12,7 +12,7 @@
 	</select>
 	
 	<!-- 댓글 내역 가져오기 -->
-	<select id="getCommentList" parameterType="int" resultType="CMDTO">
+	<select id="getCommentList" parameterType="CMDTO" resultType="CMDTO">
 		select c.num, c.pnum, c.writer, c.content, c.writetime, c.parent, c.parent_num, c.fix, c.grp, c.grph, c.grps, c.tempdel ,u.photo from comment c left outer join user u
 	    on c.writer = u.id where pnum = #{pnum} 
 	    <choose>

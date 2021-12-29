@@ -6,8 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import data.member.MemberService;
@@ -54,14 +56,13 @@ public class CommentController {
 	
 	@ResponseBody
 	@GetMapping("/comment/list")
-	public List<CommentDTO> getCommentList(int pnum, int order) {
-		List<CommentDTO> list = commentService.getCommentList(pnum, order);
+	public List<CommentDTO> getCommentList(CommentDTO commentDTO) {
+		List<CommentDTO> list = commentService.getCommentList(commentDTO);
 		return list;
 	}
 	@ResponseBody
-	@PostMapping("/comment/delete")
+	@DeleteMapping("/comment/delete")
 	public void delete(int num, int grp, int grph, int tempdel, HttpSession session) {
-		/* System.out.println("num"+num+"grp"+grp+"grph"+grph+"tempDel"+tempdel); */
 		int grpCount = commentService.countGrp(grp);
 		if(grph == 0) {
 			if(grpCount == 1){
@@ -81,7 +82,7 @@ public class CommentController {
 		}
 	}
 	@ResponseBody
-	@PostMapping("/comment/update")
+	@PutMapping("/comment/update")
 	public void delete(String num, String comment) {
 		commentService.updateComment(comment, num);
 	}

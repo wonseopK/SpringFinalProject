@@ -20,8 +20,8 @@ public class CommentService {
 		return commentMapper.changeHierarchy(grp);
 	};
 	
-	public List<CommentDTO> getCommentList(int pnum, int order){
-		List<CommentDTO> list = commentMapper.getCommentList(pnum, order);
+	public List<CommentDTO> getCommentList(CommentDTO commentDTO){
+		List<CommentDTO> list = commentMapper.getCommentList(commentDTO);
 		return list;
 	}
 	public void updateParent(String parent, String num) {

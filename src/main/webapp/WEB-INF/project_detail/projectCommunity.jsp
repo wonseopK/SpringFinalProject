@@ -351,7 +351,7 @@ $(function () {
 		let tempDel = $(this).siblings("#tempdel").val();
         $.ajax({
             url : "../comment/delete",
-            type : 'POST', 
+            type : 'Delete', 
             data : {num:num, grp:grp, grph:grph, tempdel:tempDel},
             success : function() {
             	getCommentList();
@@ -412,7 +412,7 @@ $(function () {
 			}
 			$.ajax({
 	            url : "../comment/update",
-	            type : 'POST', 
+	            type : 'Put', 
 	            data : {num:num, comment:comment},
 	            success : function() {
 	            	getCommentList();

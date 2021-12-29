@@ -19,6 +19,7 @@ public class CommentDTO {
 	private int grps;
 	private int tempdel;
 	private int parent_num;
+	private int order;
 	private String parent;
 	private String writer;
 	private String photo;
