@@ -10,6 +10,13 @@ https://blog.naver.com/wonseob7942/222597821292 감사합니다.
 <br/>(기존팀원의 취업으로 인해 해당 팀원이 진행하던 기능 백엔드 부분 전담)
 - 프로젝트 발표
 
+# 채팅
+https://user-images.githubusercontent.com/87956011/149280883-6e3fb49a-7aaa-4e8e-b23c-835b4cff0f12.mp4
+
+# 댓글
+https://user-images.githubusercontent.com/87956011/149280971-8d3f0ffb-8683-4872-ac72-d15cd08bc84c.mp4
+
+
 
 # 프로젝트 종료 후 유지보수 Update
 # Finished
@@ -25,6 +32,10 @@ lucy는 json 까지 방어해주지 못했습니다.<br/>
 CharacterEscapes를 상속받아 HTMLCharacterEscapes를 구현하는방법을 발견하고 적용시켜서 문제를 해결했습니다.
 <br/>
 디테일한 부분을 충분히 테스트하고 항상 다양한 관점에서 생각해 보는 것이 중요함을 깨닫게 해주는 문제였습니다.
+
+
+
+
 
 # InProgress
 # - RESTFUL API에 맞지 않게 만들어진 부분 개선
